@@ -1,0 +1,9 @@
+seeds:
+    - Tickets:
+        id: 1
+        name: "Presencial"
+        price: "250"
+    - Tickets:
+        id: 2
+        name: "Online"
+        price: "100"
