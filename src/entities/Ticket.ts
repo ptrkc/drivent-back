@@ -1,7 +1,7 @@
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
-@Entity("ticketTypes")
-export default class TicketType extends BaseEntity {
+@Entity("tickets")
+export default class Tickets extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
