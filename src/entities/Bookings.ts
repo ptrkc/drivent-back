@@ -1,6 +1,7 @@
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn } from "typeorm";
 import User from "./User";
 import { Booking } from "@/controllers/client/booking";
+import BookingAlreadyExistsError from "@/errors/BookingAlreadyExists";
 
 @Entity("bookings")
 export default class Bookings extends BaseEntity {
@@ -24,9 +25,22 @@ export default class Bookings extends BaseEntity {
   user: User;
 
   static async createNewBooking(bookingInfo: Booking) {
+    const searchBooking = await this.searchIfAlreadyExistsBooking(bookingInfo.userId);
+    if(searchBooking) {
+      throw new BookingAlreadyExistsError();
+    }
+    
     const newBooking = this.create({ isOnline: true, userId: bookingInfo.userId });
     await newBooking.save();
     return newBooking;
+  }
+
+  static async searchIfAlreadyExistsBooking(userId: number) {
+    const booking = await this.findOne({ userId });
+    if(booking) {
+      return true;
+    }
+    return false;
   }
 }
 
