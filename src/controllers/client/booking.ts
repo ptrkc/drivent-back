@@ -3,9 +3,9 @@ import httpStatus from "http-status";
 
 import * as service from "@/services/client/booking";
 
-export interface Booking{
-    userId: number;
-    ticketInfo: TicketInfo;
+export interface Booking {
+  userId: number;
+  ticketInfo: TicketInfo;
 }
 
 interface TicketInfo {
@@ -14,8 +14,22 @@ interface TicketInfo {
   price: number
 }
 
+interface PaymentInfo {
+  bookingId: number;
+  name: string;
+  cardNumber: string;
+  expiry: string;
+  cvc: number;
+}
+
 export async function post(req: Request, res: Response) {
   const bookingInfo = req.body as Booking;
   const sendBooking = service.booking(bookingInfo);
   res.sendStatus(httpStatus.CREATED);
+}
+
+export async function pay(req: Request, res: Response) {
+  const bookingInfo = req.body as Booking;
+  const sendBooking = service.booking(bookingInfo);
+  res.sendStatus(httpStatus.OK);
 }
