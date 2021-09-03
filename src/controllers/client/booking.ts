@@ -5,7 +5,13 @@ import * as service from "@/services/client/booking";
 
 export interface Booking{
     userId: number;
-    ticketInfo: any;
+    ticketInfo: TicketInfo;
+}
+
+interface TicketInfo {
+  isOnline: boolean,
+  hasHotel: boolean,
+  price: number
 }
 
 export async function post(req: Request, res: Response) {

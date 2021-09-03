@@ -11,8 +11,11 @@ export default class Bookings extends BaseEntity {
   @Column()
   isOnline: boolean;
 
-  @Column("boolean", { default: false })
+  @Column()
   hasHotel: boolean;
+
+  @Column()
+  price: number;
 
   @Column("boolean", { default: false })
   isPaid: boolean;
@@ -29,8 +32,12 @@ export default class Bookings extends BaseEntity {
     if(searchBooking) {
       throw new BookingAlreadyExistsError();
     }
+    const userId = bookingInfo.userId;
+    const ticketInfo = bookingInfo.ticketInfo;
+
+    const { isOnline, hasHotel, price } = ticketInfo;
+    const newBooking = this.create({ isOnline, hasHotel, price, userId });
     
-    const newBooking = this.create({ isOnline: true, userId: bookingInfo.userId });
     await newBooking.save();
     return newBooking;
   }

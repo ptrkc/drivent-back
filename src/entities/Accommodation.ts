@@ -11,6 +11,9 @@ export default class Accommodation extends BaseEntity {
   @Column()
   price: number;
 
+  @Column()
+  isRequested: boolean;
+
   static async get() {
     return await this.find();
   }
