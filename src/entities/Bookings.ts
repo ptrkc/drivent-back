@@ -1,5 +1,6 @@
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn } from "typeorm";
 import User from "./User";
+import { Booking } from "@/controllers/client/booking";
 
 @Entity("bookings")
 export default class Bookings extends BaseEntity {
@@ -21,4 +22,11 @@ export default class Bookings extends BaseEntity {
   @OneToOne(() => User, (user: User) => user.booking)
   @JoinColumn()
   user: User;
+
+  static async createNewBooking(bookingInfo: Booking) {
+    const newBooking = this.create({ isOnline: true, userId: bookingInfo.userId });
+    await newBooking.save();
+    return newBooking;
+  }
 }
+
