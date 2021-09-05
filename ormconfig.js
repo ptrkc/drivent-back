@@ -11,7 +11,13 @@ try {
   for (const config in envConfig) {
     process.env[config] = envConfig[config];
   }
-} catch (err) {}
+} catch (err) { }
+
+const extraInfo = process.env.NODE_ENV === 'production' ? {
+  ssl: {
+    rejectUnauthorized: false,
+  },
+} : {};
 
 module.exports = {
   type: 'postgres',
@@ -23,9 +29,5 @@ module.exports = {
     migrationsDir: 'src/migrations',
     entitiesDir: 'dist/entities/*.js',
   },
-  extra: {
-    ssl: {
-      rejectUnauthorized: false,
-    },
-  },
+  extra: extraInfo
 };
