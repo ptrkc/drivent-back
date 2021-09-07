@@ -12,7 +12,7 @@ export interface Booking{
 export async function post(req: Request, res: Response) {
   const userId = req.user.id;
   const bookingInfo = req.body as Booking;
-  service.booking(bookingInfo, userId);
+  await service.booking(bookingInfo, userId);
   res.sendStatus(httpStatus.CREATED);
 }
 
