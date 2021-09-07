@@ -27,27 +27,23 @@ export default class Bookings extends BaseEntity {
   @JoinColumn()
   user: User;
 
-  static async createNewBooking(bookingInfo: Booking) {
-    const searchBooking = await this.searchIfAlreadyExistsBooking(bookingInfo.userId);
+  static async createNewBooking(bookingInfo: Booking, userId: number) {
+    const searchBooking = await this.getDetails(userId);
     if(searchBooking) {
       throw new BookingAlreadyExistsError();
     }
-    const userId = bookingInfo.userId;
-    const ticketInfo = bookingInfo.ticketInfo;
 
-    const { isOnline, hasHotel, price } = ticketInfo;
+    const { isOnline, hasHotel, price } = bookingInfo;
     const newBooking = this.create({ isOnline, hasHotel, price, userId });
     
     await newBooking.save();
     return newBooking;
   }
 
-  static async searchIfAlreadyExistsBooking(userId: number) {
+  static async getDetails(userId: number) {
     const booking = await this.findOne({ userId });
-    if(booking) {
-      return true;
-    }
-    return false;
+    
+    return booking;
   }
 }
 

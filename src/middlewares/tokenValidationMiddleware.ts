@@ -19,15 +19,15 @@ export default async function authenticationMiddleware(req: Request, res: Respon
     } 
   
     const { userId } = jwt.verify(token, process.env.JWT_SECRET) as JwtPayload;
-
+    
     const userSession = await sessionService.findSessionByToken(token);
-
+    
     if(userSession.token !== token) {
       throw new UnauthorizedError();
     }
-
     req.user = { id: userId };
     next();
+    return;
   } catch (e) {
     throw new UnauthorizedError();
   }
