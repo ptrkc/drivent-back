@@ -1,5 +1,6 @@
-import { Booking, PaymentInfo } from "@/controllers/client/booking";
+import { Booking } from "@/controllers/client/booking";
 import Bookings from "@/entities/Bookings";
+import { PaymentInfo } from "@/interfaces/payment";
 import creditCard from "@/schemas/creditCard";
 
 export async function booking(bookingInfo: Booking) {

@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import httpStatus from "http-status";
 
 import * as service from "@/services/client/booking";
+import { PaymentInfo } from "@/interfaces/payment";
 
 export interface Booking {
   userId: number;
@@ -12,13 +13,6 @@ interface TicketInfo {
   isOnline: boolean,
   hasHotel: boolean,
   price: number
-}
-
-export interface PaymentInfo {
-  name: string;
-  cardNumber: string;
-  expiry: Date;
-  cvc: string;
 }
 
 export async function post(req: Request, res: Response) {
