@@ -1,6 +1,6 @@
 import faker from "faker";
 
-import User from "@/entities/User";
+import User from "../../src/entities/User";
 
 export async function createUser() {
   const user = User.create({
@@ -9,6 +9,6 @@ export async function createUser() {
   });
 
   await user.save();
-  
+
   return user;
 }
