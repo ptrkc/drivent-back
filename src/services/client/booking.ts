@@ -1,4 +1,4 @@
-import { Booking } from "@/controllers/client/booking";
+import Booking from "@/interfaces/booking";
 import Bookings from "@/entities/Bookings";
 
 export async function booking(bookingInfo: Booking, userId: number) {

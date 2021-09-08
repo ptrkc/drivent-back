@@ -1,6 +1,6 @@
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn } from "typeorm";
 import User from "./User";
-import { Booking } from "@/controllers/client/booking";
+import Booking from "@/interfaces/booking";
 import BookingAlreadyExistsError from "@/errors/BookingAlreadyExists";
 
 @Entity("bookings")

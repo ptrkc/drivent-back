@@ -2,12 +2,7 @@ import { Request, Response } from "express";
 import httpStatus from "http-status";
 
 import * as service from "@/services/client/booking";
-
-export interface Booking{
-  isOnline: boolean,
-  hasHotel: boolean,
-  price: number
-}
+import Booking from "@/interfaces/booking";
 
 export async function post(req: Request, res: Response) {
   const userId = req.user.id;
