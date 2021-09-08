@@ -1,6 +1,8 @@
 import faker from "faker";
+import jwt from "jsonwebtoken";
 
 import User from "@/entities/User";
+import Session from "@/entities/Session";
 
 export async function createUser() {
   const user = User.create({
@@ -11,4 +13,22 @@ export async function createUser() {
   await user.save();
   
   return user;
+}
+
+export async function logUserWithToken() {
+  await createUser();
+  const userId = 1;
+
+  const token = jwt.sign({
+    userId
+  }, process.env.JWT_SECRET);
+
+  const session = Session.create({
+    userId,
+    token
+  });
+
+  await session.save();
+  
+  return { userId, token: `Bearer ${token}` };
 }
