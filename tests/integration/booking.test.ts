@@ -5,7 +5,7 @@ import { clearDatabase, endConnection } from "../utils/database";
 import { createBasicSettings } from "../utils/app";
 import { createSession } from "../factories/sessionFactory";
 import { createCreditCard } from "../factories/creditCardFactory";
-import { createBooking } from "../factories/bookingFactory";
+import { createBooking, saveBooking } from "../factories/bookingFactory";
 
 const agent = supertest(app);
 let settings = null;
@@ -27,17 +27,16 @@ afterAll(async () => {
 describe("GET /booking", () => {
   it("should return user`s booking details", async () => {
     const session = await createSession();
-    await createBooking();
-
+    const booking = await createBooking(session.userId);
+    await saveBooking(booking);
+    
     const response = await agent.get("/booking").set("Authorization", session.token);
 
     expect(response.body).toEqual(
       expect.objectContaining({
-        isOnline: true,
-        hasHotel: false,
-        price: 100,
-        isPaid: false,
-        userId: 1
+        isOnline: false,
+        hasHotel: true,
+        price: 25000
       }));
   });
 });
@@ -45,7 +44,7 @@ describe("GET /booking", () => {
 describe("POST /booking", () => {
   it("should return status 201 for booking successfuly created", async () => {
     const session = await createSession();
-    const { id, userId, ...bookingPostParams } = await createBooking();
+    const { id, userId, isPaid, ...bookingPostParams } = await createBooking(session.userId);
 
     const response = await agent.post("/booking").send(bookingPostParams).set("Authorization", `Bearer ${session.token}`);
 
@@ -76,7 +75,9 @@ describe("POST /booking/:id/pay", () => {
   it("should return status 200 for valid booking id", async () => {
     const session = await createSession();
     const creditCard = createCreditCard();
-    const booking = await createBooking();
+    const booking = await createBooking(session.userId);
+    await saveBooking(booking);
+
     const response = await agent
       .post(`/booking/${booking.id}/pay`)
       .send(creditCard)
