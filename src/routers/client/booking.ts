@@ -9,5 +9,6 @@ const router = Router();
 
 router.post("/", schemaValidatingMiddleware(bookingSchema), controller.post);
 router.get("/", controller.get);
+router.post("/:id/pay", controller.pay);
 
 export default router;

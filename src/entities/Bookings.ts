@@ -35,7 +35,7 @@ export default class Bookings extends BaseEntity {
 
     const { isOnline, hasHotel, price } = bookingInfo;
     const newBooking = this.create({ isOnline, hasHotel, price, userId });
-    
+
     await newBooking.save();
     return newBooking;
   }
@@ -44,6 +44,14 @@ export default class Bookings extends BaseEntity {
     const booking = await this.findOne({ userId });
     
     return booking;
+  }
+
+  static async payBooking(id: number) {
+    const booking = await this.findOne({ id });
+    if (!booking) return false;
+
+    await this.update(id, { isPaid: true });
+    return true;
   }
 }
 

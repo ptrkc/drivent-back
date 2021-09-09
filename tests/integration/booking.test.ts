@@ -1,13 +1,14 @@
 import supertest from "supertest";
 
-import app, { init } from "@/app";
-
+import app, { init } from "../../src/app";
 import { clearDatabase, endConnection } from "../utils/database";
 import { createBasicSettings } from "../utils/app";
-import { logUserWithToken } from "../factories/userFactory";
-import { createBook, saveBook } from "../factories/bookingFactory";
+import { createSession } from "../factories/sessionFactory";
+import { createCreditCard } from "../factories/creditCardFactory";
+import { createBooking } from "../factories/bookingFactory";
 
-const agent =  supertest(app);
+const agent = supertest(app);
+let settings = null;
 
 beforeAll(async () => {
   await init();
@@ -15,7 +16,7 @@ beforeAll(async () => {
 
 beforeEach(async () => {
   await clearDatabase();
-  await createBasicSettings();
+  settings = await createBasicSettings();
 });
 
 afterAll(async () => {
@@ -25,11 +26,10 @@ afterAll(async () => {
 
 describe("GET /booking", () => {
   it("should return user`s booking details", async () => {
-    const auth = await logUserWithToken();
-    
-    await saveBook(auth.userId);
+    const session = await createSession();
+    await createBooking();
 
-    const response = await agent.get("/booking").set("Authorization", auth.token);
+    const response = await agent.get("/booking").set("Authorization", session.token);
 
     expect(response.body).toEqual(
       expect.objectContaining({
@@ -44,20 +44,44 @@ describe("GET /booking", () => {
 
 describe("POST /booking", () => {
   it("should return status 201 for booking successfuly created", async () => {
-    const auth = await logUserWithToken();
-    const book = await createBook();
+    const session = await createSession();
+    const { id, userId, ...bookingPostParams } = await createBooking();
 
-    const response = await agent.post("/booking").send(book).set("Authorization", auth.token);
+    const response = await agent.post("/booking").send(bookingPostParams).set("Authorization", `Bearer ${session.token}`);
 
     expect(response.status).toEqual(201);
   });
 
   it("should return status 422 for unprocessable booking params", async () => {
-    const auth = await logUserWithToken();
+    const session = await createSession();
 
-    const response = await agent.post("/booking").send({}).set("Authorization", auth.token);
+    const response = await agent.post("/booking").send({}).set("Authorization", session.token);
 
     expect(response.status).toEqual(422);
   });
 });
 
+describe("POST /booking/:id/pay", () => {
+  it("should return status 404 for inexistent booking id", async () => {
+    const session = await createSession();
+    const creditCard = createCreditCard();
+    const response = await agent
+      .post("/booking/999999/pay")
+      .send(creditCard)
+      .set({ "Authorization": `Bearer ${session.token}` });
+
+    expect(response.status).toBe(404);
+  });
+
+  it("should return status 200 for valid booking id", async () => {
+    const session = await createSession();
+    const creditCard = createCreditCard();
+    const booking = await createBooking();
+    const response = await agent
+      .post(`/booking/${booking.id}/pay`)
+      .send(creditCard)
+      .set({ "Authorization": `Bearer ${session.token}` });
+
+    expect(response.status).toBe(200);
+  });
+});

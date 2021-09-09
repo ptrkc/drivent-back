@@ -1,19 +1,18 @@
 
-import Bookings from "@/entities/Bookings";
+import Bookings from "../../src/entities/Bookings";
+import { createSession } from "./sessionFactory";
 
-export async function createBook() {
-  const book = Bookings.create({
-    isOnline: true,
-    hasHotel: false,
-    price: 100
+export const createBooking = async () => {
+  const session = await createSession();
+  const booking = Bookings.create({
+    userId: session.userId,
+    isOnline: false,
+    hasHotel: true,
+    price: 25000
   });
-  return book;
-}
 
-export async function saveBook(userId: number) {
-  const booking = await createBook();
+  const { id } = await booking.save();
+  booking.id = id;
 
-  booking.userId = userId;
-
-  await booking.save();
-}
+  return booking;
+};
