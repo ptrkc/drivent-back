@@ -24,6 +24,8 @@ export async function clearDatabase() {
       entities.push(entity);
     }
   }
+  await connection.query("TRUNCATE users RESTART IDENTITY CASCADE");
+  await connection.query("TRUNCATE sessions RESTART IDENTITY CASCADE");
 }
 
 export async function endConnection() {

@@ -2,23 +2,23 @@ import { Request, Response } from "express";
 import httpStatus from "http-status";
 
 import * as service from "@/services/client/booking";
+import Booking from "@/interfaces/booking";
 import { PaymentInfo } from "@/interfaces/payment";
 
-export interface Booking {
-  userId: number;
-  ticketInfo: TicketInfo;
-}
-
-interface TicketInfo {
-  isOnline: boolean,
-  hasHotel: boolean,
-  price: number
-}
-
 export async function post(req: Request, res: Response) {
+  const userId = req.user.id;
   const bookingInfo = req.body as Booking;
-  const sendBooking = service.booking(bookingInfo);
+  await service.booking(bookingInfo, userId);
   res.sendStatus(httpStatus.CREATED);
+}
+
+export async function get(req: Request, res: Response) {
+  const userId = req.user.id;
+  const bookingDetails = await service.getBookingDetails(userId);
+  if(!bookingDetails) {
+    return res.sendStatus(httpStatus.NO_CONTENT);
+  }
+  res.send(bookingDetails).status(httpStatus.OK);
 }
 
 export async function pay(req: Request, res: Response) {

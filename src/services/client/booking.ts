@@ -1,11 +1,16 @@
-import { Booking } from "@/controllers/client/booking";
+import Booking from "@/interfaces/booking";
 import Bookings from "@/entities/Bookings";
 import { PaymentInfo } from "@/interfaces/payment";
 import creditCard from "@/schemas/creditCard";
 
-export async function booking(bookingInfo: Booking) {
-  const sendBooking = Bookings.createNewBooking(bookingInfo);
+export async function booking(bookingInfo: Booking, userId: number) {
+  const sendBooking = await Bookings.createNewBooking(bookingInfo, userId);
   return sendBooking;
+}
+
+export async function getBookingDetails(userId: number) {
+  const bookDetails = await Bookings.getDetails(userId);
+  return bookDetails;
 }
 
 export async function pay(id: number) {

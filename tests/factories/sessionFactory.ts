@@ -1,6 +1,6 @@
 import { createUser } from "./userFactory";
 import Session from "../../src/entities/Session";
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 
 export const createSession = async () => {
   const user = await createUser();
