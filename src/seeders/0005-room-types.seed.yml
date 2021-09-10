@@ -1,0 +1,13 @@
+seeds:
+    - RoomType:
+        id: 1
+        name: "Single"
+        vacancies: 1
+    - RoomType:
+        id: 2
+        name: "Double"
+        vacancies: 2
+    - RoomType:
+        id: 3
+        name: "Triple"
+        vacancies: 3

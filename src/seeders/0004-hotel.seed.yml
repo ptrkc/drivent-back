@@ -1,0 +1,4 @@
+seeds:
+    - Hotel:
+        id: 1
+        name: "Grupo 7 Resort"
