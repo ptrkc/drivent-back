@@ -29,6 +29,6 @@ export default class Rooms extends BaseEntity {
   isAvailable: boolean;
 
   static async get(hotelId: number) {
-    return await this.find({ where: { hotelId } });
+    return await this.find({ where: { hotelId }, relations: ["roomType"] });
   }
 }

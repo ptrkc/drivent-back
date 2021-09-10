@@ -1,4 +1,10 @@
 seeds:
     - Hotel:
         id: 1
-        name: "Grupo 7 Resort"
+        name: "Driven Resort"
+    - Hotel:
+        id: 2
+        name: "Driven Palace"
+    - Hotel:
+        id: 3
+        name: "Driven World"

@@ -11,3 +11,15 @@ seeds:
         hotelId: 1
         roomTypeId: 2
         filledVacancies: 1
+    - Rooms:
+        id: 3
+        number: "03"
+        hotelId: 1
+        roomTypeId: 1
+        filledVacancies: 0
+    - Rooms:
+        id: 4
+        number: "04"
+        hotelId: 1
+        roomTypeId: 3
+        filledVacancies: 2
