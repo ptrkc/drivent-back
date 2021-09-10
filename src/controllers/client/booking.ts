@@ -8,14 +8,14 @@ import { PaymentInfo } from "@/interfaces/payment";
 export async function post(req: Request, res: Response) {
   const userId = req.user.id;
   const bookingInfo = req.body as Booking;
-  await service.booking(bookingInfo, userId);
-  res.sendStatus(httpStatus.CREATED);
+  const { id } = await service.booking(bookingInfo, userId);
+  res.send({ id }).status(httpStatus.CREATED);
 }
 
 export async function get(req: Request, res: Response) {
   const userId = req.user.id;
   const bookingDetails = await service.getBookingDetails(userId);
-  if(!bookingDetails) {
+  if (!bookingDetails) {
     return res.sendStatus(httpStatus.NO_CONTENT);
   }
   res.send(bookingDetails).status(httpStatus.OK);
