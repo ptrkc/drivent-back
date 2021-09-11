@@ -27,7 +27,6 @@ export default async function authenticationMiddleware(req: Request, res: Respon
     }
     req.user = { id: userId };
     next();
-    return;
   } catch (e) {
     throw new UnauthorizedError();
   }

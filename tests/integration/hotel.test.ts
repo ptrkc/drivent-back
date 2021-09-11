@@ -43,7 +43,8 @@ describe("GET /hotel/:id/rooms", () => {
         filledVacancies: 1,
         isAvailable: false,
         vacancies: [
-          {
+          { 
+            id: 1,
             isFilled: true
           }
         ]

@@ -1,5 +1,6 @@
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
 
+import { RoomVacancy } from "@/interfaces/hotel";
 import Hotel from "./Hotel";
 import RoomType from "./RoomType";
 
@@ -28,7 +29,7 @@ export default class Rooms extends BaseEntity {
 
   isAvailable: boolean;
 
-  vacancies: { isFilled: boolean }[]
+  vacancies: RoomVacancy[]
 
   static async get(hotelId: number) {
     return await this.find({ where: { hotelId }, relations: ["roomType"] });
