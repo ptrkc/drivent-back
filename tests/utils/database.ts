@@ -26,6 +26,9 @@ export async function clearDatabase() {
   }
   await connection.query("TRUNCATE users RESTART IDENTITY CASCADE");
   await connection.query("TRUNCATE sessions RESTART IDENTITY CASCADE");
+  await connection.query("TRUNCATE hotel RESTART IDENTITY CASCADE");
+  await connection.query("TRUNCATE rooms RESTART IDENTITY CASCADE");
+  await connection.query("TRUNCATE \"roomType\" RESTART IDENTITY CASCADE");
 }
 
 export async function endConnection() {
