@@ -2,36 +2,15 @@ import app, { init } from "@/app";
 import http from "http";
 import { Server } from "ws";
 
-import updatesController from "./controllers/client/updates";
+import * as wsFunctions from "./websocket";
 
 const server = http.createServer(app);
 const wss = new Server({ noServer: true, path: "/updates" });
 
-wss.on("connection", updatesController);
+wss.on("connection", wsFunctions.connection);
 
-function heartbeat() {
-  this.isAlive = true;
-  console.log("still alive");
-}
-
-wss.on("connection", function connection(ws) {
-  const client = ws as unknown as WSClient;
-  client.isAlive = true;
-  ws.on("pong", heartbeat);
-});
-
-const interval = setInterval(function ping() {
-  wss.clients.forEach(function each(ws) {
-    const client = ws as unknown as WSClient;
-    if (client.isAlive === false) return ws.terminate();
-    client.isAlive = false;
-    ws.ping();
-  });
-}, 5000);
-
-wss.on("close", function close() {
-  clearInterval(interval);
-});
+const pingInterval = setInterval(() => wsFunctions.ping(wss), 10000);
+const updateInterval = setInterval(() => wsFunctions.sendUpdatedData(wss), 3000);
 
 server.on("upgrade", function upgrade(request, socket, head) {
   wss.handleUpgrade(request, socket, head, function done(ws) {
