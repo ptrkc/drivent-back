@@ -26,4 +26,8 @@ export default class Activitie extends BaseEntity {
   @ManyToMany(() => User)
   @JoinTable()
   users: [User];
+
+  static async get() {
+    return await this.find({ relations: ["auditorium", "users"], order: { id: "ASC" } });
+  }
 }
