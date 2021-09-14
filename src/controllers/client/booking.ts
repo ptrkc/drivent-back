@@ -9,7 +9,8 @@ export async function post(req: Request, res: Response) {
   const userId = req.user.id;
   const bookingInfo = req.body as Booking;
   const { id } = await service.booking(bookingInfo, userId);
-  res.send({ id }).status(httpStatus.CREATED);
+  res.status(httpStatus.CREATED);
+  res.send({ id });
 }
 
 export async function get(req: Request, res: Response) {
