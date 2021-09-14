@@ -39,7 +39,7 @@ export default class Bookings extends BaseEntity {
   hotel: Hotel;
 
   @ManyToOne(() => Rooms, (room: Rooms) => room.bookings)
-  room: Hotel;
+  room: Rooms;
 
   static async createNewBooking(bookingInfo: Booking, userId: number) {
     const searchBooking = await this.getDetails(userId);
