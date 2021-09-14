@@ -2,14 +2,14 @@ import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, OneToMany } from "t
 
 import Activitie from "./Activitie";
 
-@Entity("activitiesAuditoriums")
-export default class ActivitieAuditorium extends BaseEntity {
+@Entity("auditoriums")
+export default class Auditorium extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
   name: string;
 
-  @OneToMany(() => Activitie, (activities: Activitie) => activities.activitieAuditorium)
+  @OneToMany(() => Activitie, (activities: Activitie) => activities.auditorium)
   activities: [Activitie];
 }

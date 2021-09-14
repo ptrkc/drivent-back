@@ -1,6 +1,6 @@
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne, ManyToMany, JoinTable } from "typeorm";
 
-import ActivitieAuditorium from "./ActivitieAuditorium";
+import Auditorium from "./Auditorium";
 import User from "./User";
 
 @Entity("activities")
@@ -20,8 +20,8 @@ export default class Activitie extends BaseEntity {
   @Column()
   vacancies: number;
 
-  @ManyToOne(() => ActivitieAuditorium, (activitieAuditorium: ActivitieAuditorium) => activitieAuditorium.activities)
-  activitieAuditorium: ActivitieAuditorium;
+  @ManyToOne(() => Auditorium, (auditorium: Auditorium) => auditorium.activities)
+  auditorium: Auditorium;
 
   @ManyToMany(() => User)
   @JoinTable()
