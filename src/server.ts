@@ -1,26 +1,37 @@
 import app, { init } from "@/app";
 import http from "http";
-import WebSocket, { Server } from "ws";
+import { Server } from "ws";
+
+import updatesController from "./controllers/client/updates";
 
 const server = http.createServer(app);
 const wss = new Server({ noServer: true, path: "/updates" });
 
-wss.on("connection", (ws: WebSocket, req: http.IncomingMessage) => {
-  const requestedUpdate = req.url.replace("/updates?q=", "");
-  //send immediatly a feedback to the incoming connection
-  if (requestedUpdate === "rooms") {
-    ws.send("so you want rooms");
-  } else if (requestedUpdate === "activities") {
-    ws.send("so you want some activities");
-  } else {
-    ws.send("bad request bruh");
-    ws.close();
-  }
+wss.on("connection", updatesController);
+
+function heartbeat() {
+  this.isAlive = true;
+  console.log("still alive");
+}
+
+wss.on("connection", function connection(ws) {
+  const client = ws as unknown as WSClient;
+  client.isAlive = true;
+  ws.on("pong", heartbeat);
 });
 
-// wss.on("close", function close() {
-//   clearInterval(interval);
-// });
+const interval = setInterval(function ping() {
+  wss.clients.forEach(function each(ws) {
+    const client = ws as unknown as WSClient;
+    if (client.isAlive === false) return ws.terminate();
+    client.isAlive = false;
+    ws.ping();
+  });
+}, 5000);
+
+wss.on("close", function close() {
+  clearInterval(interval);
+});
 
 server.on("upgrade", function upgrade(request, socket, head) {
   wss.handleUpgrade(request, socket, head, function done(ws) {
