@@ -55,7 +55,7 @@ export default class Bookings extends BaseEntity {
   }
 
   static async getDetails(userId: number) {
-    const booking = await this.findOne({ userId });
+    const booking = await this.findOne({ userId }, { relations: ["hotel"] });
     
     return booking;
   }
