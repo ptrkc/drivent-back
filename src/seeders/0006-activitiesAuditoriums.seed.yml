@@ -1,0 +1,10 @@
+seeds:
+    - ActivitieAuditorium:
+        id: 1
+        name: "Auditório Principal"
+    - ActivitieAuditorium:
+        id: 2
+        name: "Auditório Lateral"
+    - ActivitieAuditorium:
+        id: 3
+        name: "Sala de Workshop"

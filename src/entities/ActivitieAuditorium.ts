@@ -3,7 +3,7 @@ import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, OneToMany } from "t
 import Activitie from "./Activitie";
 
 @Entity("activitiesAuditoriums")
-export default class RoomTypeHotel extends BaseEntity {
+export default class ActivitieAuditorium extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 

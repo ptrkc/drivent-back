@@ -4,7 +4,7 @@ import ActivitieAuditorium from "./ActivitieAuditorium";
 import User from "./User";
 
 @Entity("activities")
-export default class RoomTypeHotel extends BaseEntity {
+export default class Activitie extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
