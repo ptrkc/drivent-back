@@ -1,8 +1,9 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from "typeorm";
 
 import { RoomVacancy } from "@/interfaces/hotel";
 import Hotel from "./Hotel";
 import RoomType from "./RoomType";
+import Bookings from "./Bookings";
 
 @Entity("rooms")
 export default class Rooms extends BaseEntity {
@@ -26,6 +27,9 @@ export default class Rooms extends BaseEntity {
 
   @ManyToOne(() => RoomType, (roomType: RoomType) => roomType.rooms)
   roomType: RoomType;
+
+  @OneToMany(() => Bookings, (bookings: Bookings) => bookings.room)
+  bookings: [Bookings];
 
   isAvailable: boolean;
 

@@ -1,6 +1,7 @@
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, ManyToOne } from "typeorm";
 import User from "./User";
 import Hotel from "./Hotel";
+import Rooms from "./Rooms";
 import Booking from "@/interfaces/booking";
 import BookingAlreadyExistsError from "@/errors/BookingAlreadyExists";
 
@@ -35,7 +36,10 @@ export default class Bookings extends BaseEntity {
   user: User;
 
   @ManyToOne(() => Hotel, (hotel: Hotel) => hotel.bookings)
-  hotel: Hotel
+  hotel: Hotel;
+
+  @ManyToOne(() => Rooms, (room: Rooms) => room.bookings)
+  room: Hotel;
 
   static async createNewBooking(bookingInfo: Booking, userId: number) {
     const searchBooking = await this.getDetails(userId);
