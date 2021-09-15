@@ -41,11 +41,11 @@ describe("GET /hotel/:id/rooms", () => {
         hotelId: 1,
         roomTypeId: 1,
         filledVacancies: 1,
-        isAvailable: false,
+        isAvailable: true,
         vacancies: [
           { 
             id: 1,
-            isFilled: true
+            isFilled: false
           }
         ]
       })]);

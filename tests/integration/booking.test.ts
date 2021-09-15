@@ -6,6 +6,7 @@ import { createBasicSettings } from "../utils/app";
 import { createSession } from "../factories/sessionFactory";
 import { createCreditCard } from "../factories/creditCardFactory";
 import { createBooking, saveBooking } from "../factories/bookingFactory";
+import * as HotelFactory from "../factories/hotelFactory";
 
 const agent = supertest(app);
 let settings = null;
@@ -55,6 +56,29 @@ describe("POST /booking", () => {
     const session = await createSession();
 
     const response = await agent.post("/booking").send({}).set("Authorization", session.token);
+
+    expect(response.status).toEqual(422);
+  });
+});
+
+describe("POST /booking/room", () => {
+  it("should return status 200 for booking new room successfuly", async () => {
+    const session = await createSession();
+    const booking = await createBooking(session.userId);
+    await saveBooking(booking);
+    await HotelFactory.create();
+    await HotelFactory.createRoomType();
+    const room = await HotelFactory.createHotelRoom();
+
+    const response = await agent.post("/booking/room").send({ roomId: room.id }).set("Authorization", session.token);
+
+    expect(response.status).toEqual(200);
+  });
+
+  it("should return status 422 for unprocessable booking params", async () => {
+    const session = await createSession();
+
+    const response = await agent.post("/booking/room").send({}).set("Authorization", session.token);
 
     expect(response.status).toEqual(422);
   });

@@ -14,7 +14,7 @@ export async function getHotelRooms(hotelId: number, userId: number) {
         if(selectedRoom) {
           selectedRoom = null;
           r.isAvailable = true;
-          return { id: i+1, isFilled: null, isSelected: true };
+          return { id: i+1, isFilled: false, isSelected: true };
         } else if(filled >= 0) {
           return { id: i+1, isFilled: true };
         } else {
