@@ -11,11 +11,11 @@ export default class Activitie extends BaseEntity {
   @Column()
   name: string;
 
-  @Column({ type: "timestamp" })
-  startTime: Date;
+  @Column({ type: "timestamptz" })
+  startTime: string;
 
-  @Column({ type: "timestamp" })
-  endTime: Date;
+  @Column({ type: "timestamptz" })
+  endTime: string;
 
   @Column()
   vacancies: number;

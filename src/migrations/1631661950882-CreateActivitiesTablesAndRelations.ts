@@ -1,11 +1,11 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-export class CreateActivitiesTablesAndRelations1631655333396 implements MigrationInterface {
-    name = "CreateActivitiesTablesAndRelations1631655333396"
+export class CreateActivitiesTablesAndRelations1631661950882 implements MigrationInterface {
+    name = "CreateActivitiesTablesAndRelations1631661950882"
 
     public async up(queryRunner: QueryRunner): Promise<void> {
       await queryRunner.query("CREATE TABLE \"auditoriums\" (\"id\" SERIAL NOT NULL, \"name\" character varying NOT NULL, CONSTRAINT \"PK_7c89a4e25280efb7b40ae81a129\" PRIMARY KEY (\"id\"))");
-      await queryRunner.query("CREATE TABLE \"activities\" (\"id\" SERIAL NOT NULL, \"name\" character varying NOT NULL, \"startTime\" TIMESTAMP NOT NULL, \"endTime\" TIMESTAMP NOT NULL, \"vacancies\" integer NOT NULL, \"auditoriumId\" integer, CONSTRAINT \"PK_7f4004429f731ffb9c88eb486a8\" PRIMARY KEY (\"id\"))");
+      await queryRunner.query("CREATE TABLE \"activities\" (\"id\" SERIAL NOT NULL, \"name\" character varying NOT NULL, \"startTime\" TIMESTAMP WITH TIME ZONE NOT NULL, \"endTime\" TIMESTAMP WITH TIME ZONE NOT NULL, \"vacancies\" integer NOT NULL, \"auditoriumId\" integer, CONSTRAINT \"PK_7f4004429f731ffb9c88eb486a8\" PRIMARY KEY (\"id\"))");
       await queryRunner.query("CREATE TABLE \"activities_users_users\" (\"activitiesId\" integer NOT NULL, \"usersId\" integer NOT NULL, CONSTRAINT \"PK_083d5f56038aa43e3260243a4a1\" PRIMARY KEY (\"activitiesId\", \"usersId\"))");
       await queryRunner.query("CREATE INDEX \"IDX_25f343ad52365e29de73e1feb5\" ON \"activities_users_users\" (\"activitiesId\") ");
       await queryRunner.query("CREATE INDEX \"IDX_829f79c5e4fa9e118d0759dbf3\" ON \"activities_users_users\" (\"usersId\") ");
