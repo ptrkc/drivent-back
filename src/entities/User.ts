@@ -52,5 +52,15 @@ export default class User extends BaseEntity {
 
     return null;
   }
+
+  static async findById(id: number) {
+    const user = await this.findOne({ id });
+
+    if (user) {
+      return user;
+    }
+
+    return null;
+  }
 }
 

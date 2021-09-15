@@ -21,5 +21,5 @@ export async function enrollUser(req: Request, res: Response) {
     return res.sendStatus(httpStatus.NO_CONTENT);
   }
 
-  res.status(httpStatus.CREATED);
+  res.sendStatus(httpStatus.CREATED);
 }

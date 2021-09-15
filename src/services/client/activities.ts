@@ -1,7 +1,9 @@
 import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
 
+import User from "@/entities/User";
 import Activitie from "@/entities/Activitie";
+import { ActivitieEnrollment } from "@/interfaces/activitieEnrollment";
 
 export async function getActivities() {
   const data = await Activitie.get();
@@ -30,4 +32,21 @@ export async function getActivities() {
   });
   
   return activities;
+}
+
+export async function enrollUser(enrollmentData: ActivitieEnrollment) {
+  const { userId, activitieId } = enrollmentData;
+
+  const user = await User.findById(userId);
+
+  if(!user) return null;
+
+  const activitie = await Activitie.findById(activitieId);
+
+  if(!activitie) return null;
+
+  activitie.users = [user];
+  await Activitie.save(activitie);
+
+  return true;
 }

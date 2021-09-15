@@ -30,4 +30,8 @@ export default class Activitie extends BaseEntity {
   static async get() {
     return await this.find({ relations: ["auditorium", "users"], order: { id: "ASC" } });
   }
+
+  static async findById(id: number) {
+    return await this.findOne({ id });
+  }
 }
