@@ -2,9 +2,12 @@ seeds:
     - Hotel:
         id: 1
         name: "Driven Resort"
+        image: "https://i.ibb.co/K9wyWsg/resort.png"
     - Hotel:
         id: 2
         name: "Driven Palace"
+        image: "https://i.ibb.co/WVq7VR7/palace.png"
     - Hotel:
         id: 3
         name: "Driven World"
+        image: "https://i.ibb.co/g3V900Q/world.png"
