@@ -1,0 +1,36 @@
+seeds:
+    - Activitie:
+        id: 1
+        name: "Minecraft: montando o PC ideal"
+        startTime: "2021-10-22 09:00:00"
+        endTime: "2021-10-22 10:00:00"
+        vacancies: 30
+        auditoriumId: 1
+    - Activitie:
+        id: 2
+        name: "LoL: montando o PC ideal"
+        startTime: "2021-10-22 10:00:00"
+        endTime: "2021-10-22 11:00:00"
+        vacancies: 30
+        auditoriumId: 1 
+    - Activitie:
+        id: 3
+        name: "Palestra X"
+        startTime: "2021-10-22 09:00:00"
+        endTime: "2021-10-22 11:00:00"
+        vacancies: 20
+        auditoriumId: 2 
+    - Activitie:
+        id: 4
+        name: "Palestra Y"
+        startTime: "2021-10-22 09:00:00"
+        endTime: "2021-10-22 10:00:00"
+        vacancies: 30
+        auditoriumId: 3
+    - Activitie:
+        id: 5
+        name: "Palestra Z"
+        startTime: "2021-10-22 10:00:00"
+        endTime: "2021-10-22 11:00:00"
+        vacancies: 10
+        auditoriumId: 3

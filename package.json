@@ -54,7 +54,7 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
-    "dayjs": "^1.10.6",
+    "dayjs": "^1.10.7",
     "dotenv": "^10.0.0",
     "email-validator": "^2.0.4",
     "express": "^4.17.1",
@@ -67,7 +67,7 @@
     "readline-sync": "^1.4.10",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.2.34",
-    "uuid": "^8.3.2",
-    "typescript-transform-paths": "^3.3.1"
+    "typescript-transform-paths": "^3.3.1",
+    "uuid": "^8.3.2"
   }
 }
