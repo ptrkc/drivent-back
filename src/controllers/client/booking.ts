@@ -4,22 +4,13 @@ import httpStatus from "http-status";
 import * as service from "@/services/client/booking";
 import Booking from "@/interfaces/booking";
 import { PaymentInfo } from "@/interfaces/payment";
-import Room from "@/interfaces/room";
 
 export async function post(req: Request, res: Response) {
   const userId = req.user.id;
   const bookingInfo = req.body as Booking;
-  const booking = await service.booking(bookingInfo, userId);
+  const { id } = await service.booking(bookingInfo, userId);
   res.status(httpStatus.CREATED);
-  res.send(booking);
-}
-
-export async function addRoom(req: Request, res: Response) {
-  const userId = req.user.id;
-  const roomInfo = req.body as Room;
-  const room = await service.bookingRoom(roomInfo, userId);
-  res.status(httpStatus.OK);
-  res.send(room);
+  res.send({ id });
 }
 
 export async function get(req: Request, res: Response) {

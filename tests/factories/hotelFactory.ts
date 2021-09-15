@@ -4,8 +4,7 @@ import Rooms from "@/entities/Rooms";
 
 export async function create() {
   const hotel = Hotel.create({
-    name: "Test Hotel",
-    image: "https://i.ibb.co/K9wyWsg/resort.png"
+    name: "Test Hotel"
   });
   await hotel.save();
 }
@@ -22,7 +21,8 @@ export async function createHotelRoom() {
   const rooms = Rooms.create({
     number: "00", 
     hotelId: 1,
-    roomTypeId: 1
+    roomTypeId: 1,
+    filledVacancies: 1,
   });
-  return await rooms.save();
+  await rooms.save();
 }

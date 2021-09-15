@@ -11,9 +11,6 @@ export default class Hotel extends BaseEntity {
   @Column()
   name: string;
 
-  @Column()
-  image: string;
-
   @OneToMany(() => Rooms, (rooms: Rooms) => rooms.hotel)
   rooms: [Rooms];
 
