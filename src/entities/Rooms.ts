@@ -19,9 +19,6 @@ export default class Rooms extends BaseEntity {
   @Column()
   roomTypeId: number;
 
-  @Column()
-  filledVacancies: number;
-
   @ManyToOne(() => Hotel, (hotel: Hotel) => hotel.rooms)
   hotel: Hotel;
 

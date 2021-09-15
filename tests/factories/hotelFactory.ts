@@ -22,8 +22,7 @@ export async function createHotelRoom() {
   const rooms = Rooms.create({
     number: "00", 
     hotelId: 1,
-    roomTypeId: 1,
-    filledVacancies: 1,
+    roomTypeId: 1
   });
   return await rooms.save();
 }
