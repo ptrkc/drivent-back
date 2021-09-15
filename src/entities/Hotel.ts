@@ -21,7 +21,7 @@ export default class Hotel extends BaseEntity {
 
   static async get() {
     const getHotels = await this.find();
-    const teste: Array<HotelsInfo> = [];
+    const response: Array<HotelsInfo> = [];
     getHotels.forEach((e) => {
       const hotel = {} as HotelsInfo;
       let allVacancies = 0;
@@ -38,8 +38,8 @@ export default class Hotel extends BaseEntity {
       });
       hotel.availableVacancies = allVacancies;
       hotel.accomodationsName = allRoomsNames;
-      teste.push(hotel);
+      response.push(hotel);
     });
-    return teste;
+    return response;
   }
 }
