@@ -4,6 +4,7 @@ import "dayjs/locale/pt-br";
 import User from "@/entities/User";
 import Activitie from "@/entities/Activitie";
 import { ActivitieEnrollment } from "@/interfaces/activitieEnrollment";
+import UserAlreadyEnrolledError from "@/errors/UserAlreadyEnrolled";
 
 export async function getActivities() {
   const data = await Activitie.get();
@@ -44,7 +45,11 @@ export async function enrollUser(enrollmentData: ActivitieEnrollment) {
   const activitie = await Activitie.findById(activitieId);
 
   if(!activitie) return null;
-
+  
+  if(activitie.users.find(u => u.id === user.id)) {
+    throw new UserAlreadyEnrolledError();
+  }
+ 
   activitie.users = [user];
   await Activitie.save(activitie);
 
