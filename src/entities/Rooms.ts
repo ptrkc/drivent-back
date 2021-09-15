@@ -24,7 +24,7 @@ export default class Rooms extends BaseEntity {
   @ManyToOne(() => Hotel, (hotel: Hotel) => hotel.rooms)
   hotel: Hotel;
 
-  @ManyToOne(() => RoomType, (roomType: RoomType) => roomType.rooms)
+  @ManyToOne(() => RoomType, (roomType: RoomType) => roomType.rooms, { eager: true })
   roomType: RoomType;
 
   isAvailable: boolean;
