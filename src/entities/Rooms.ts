@@ -33,6 +33,12 @@ export default class Rooms extends BaseEntity {
   vacancies: RoomVacancy[]
 
   static async get(hotelId: number) {
-    return await this.find({ where: { hotelId }, relations: ["roomType", "bookings"] });
+    const hotelRooms = await this.find({ where: { hotelId }, relations: ["roomType", "bookings"] });
+    hotelRooms?.sort(function(a, b) {
+      if (a.id < b.id) return -1;
+      if (a.id > b.id) return 1;
+      return 0;
+    });
+    return hotelRooms;
   }
 }
