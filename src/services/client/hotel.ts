@@ -1,9 +1,45 @@
 import Rooms from "@/entities/Rooms";
 import Hotel from "@/entities/Hotel";
+import HotelsInfo from "@/interfaces/hotelsInfo";
+import RoomType from "@/entities/RoomType";
 
 export async function getHotels() {
-  const hotels = await Hotel.get();
-  return hotels;
+  const getAllTypes = await RoomType.get();
+  const roomTypes: any = {};
+
+  getAllTypes.forEach(rt => {
+    const key = rt.id;
+    roomTypes[key] = rt.name;
+  });
+
+  const getAllHotels = await Hotel.get();
+  const response: Array<HotelsInfo> = [];
+
+  getAllHotels.forEach((h) => {
+    const hotel = {} as HotelsInfo;
+    let allAvailablesVacancies = 0;
+    const allRoomsNames: Array<string> = [];
+    hotel.id = h.id;
+    hotel.name = h.name;
+    hotel.img = h.image;
+
+    h.rooms.forEach((r) => {
+      const vacancies = r.roomType.vacancies;
+      allAvailablesVacancies += vacancies;
+      const bookings = r.bookings.length;
+      allAvailablesVacancies -= bookings;
+    });
+
+    h.roomTypeHotel.forEach(rt => {
+      const roomName = roomTypes[rt.roomTypeId];
+      allRoomsNames.push(roomName);
+    });
+
+    hotel.availableVacancies = allAvailablesVacancies;
+    hotel.accomodationsName = allRoomsNames;
+    response.push(hotel);
+  });
+  return response;
 }
 
 export async function getHotelRooms(hotelId: number, userId: number) {
