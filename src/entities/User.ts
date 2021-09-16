@@ -1,4 +1,4 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, OneToOne, OneToMany, ManyToMany, JoinTable } from "typeorm";
+import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, OneToOne, ManyToMany } from "typeorm";
 import bcrypt from "bcrypt";
 import EmailNotAvailableError from "@/errors/EmailNotAvailable";
 
@@ -58,10 +58,10 @@ export default class User extends BaseEntity {
   }
 
   static async findById(id: number) {
-    // const user = await this.findOne({ id });
     const user = await this
       .createQueryBuilder("users")
       .leftJoinAndSelect("users.activities", "activitie")
+      .where("users.id = :id", { id })
       .getOne();
 
     if (user) {
