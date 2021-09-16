@@ -19,4 +19,9 @@ export default class RoomType extends BaseEntity {
 
   @OneToMany(() => Rooms, (rooms: Rooms) => rooms.roomType)
   rooms: Rooms[];
+
+  static async get() {
+    const getTypes = await this.find();
+    return getTypes;
+  }
 }
