@@ -23,7 +23,7 @@ export default class Activitie extends BaseEntity {
   @ManyToOne(() => Auditorium, (auditorium: Auditorium) => auditorium.activities)
   auditorium: Auditorium;
 
-  @ManyToMany(() => User)
+  @ManyToMany(() => User, users => users.activities)
   @JoinTable()
   users: [User];
 

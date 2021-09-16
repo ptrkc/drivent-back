@@ -39,7 +39,7 @@ export async function enrollUser(enrollmentData: ActivitieEnrollment) {
   const { userId, activitieId } = enrollmentData;
 
   const user = await User.findById(userId);
-
+  console.log(user);
   if(!user) return null;
 
   const activitie = await Activitie.findById(activitieId);

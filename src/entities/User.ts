@@ -1,8 +1,9 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, OneToOne } from "typeorm";
+import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, OneToOne, OneToMany, ManyToMany, JoinTable } from "typeorm";
 import bcrypt from "bcrypt";
 import EmailNotAvailableError from "@/errors/EmailNotAvailable";
 
 import Bookings from "./Bookings";
+import Activitie from "./Activitie";
 
 @Entity("users")
 export default class User extends BaseEntity {
@@ -20,6 +21,9 @@ export default class User extends BaseEntity {
 
   @OneToOne(() => Bookings, (booking: Bookings) => booking.user)
   booking: Bookings;
+
+  @ManyToMany(() => Activitie, activities => activities.users)
+  activities: [Activitie];
 
   static async createNew(email: string, password: string) {
     await this.validateDuplicateEmail(email);
@@ -54,7 +58,11 @@ export default class User extends BaseEntity {
   }
 
   static async findById(id: number) {
-    const user = await this.findOne({ id });
+    // const user = await this.findOne({ id });
+    const user = await this
+      .createQueryBuilder("users")
+      .leftJoinAndSelect("users.activities", "activitie")
+      .getOne();
 
     if (user) {
       return user;
