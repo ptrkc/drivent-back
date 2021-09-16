@@ -1,0 +1,121 @@
+seeds:
+    - Activitie:
+        id: 1
+        name: "Minecraft: montando o PC ideal"
+        startTime: "2021-10-22 09:00:00"
+        endTime: "2021-10-22 10:00:00"
+        vacancies: 30
+        auditoriumId: 1
+    - Activitie:
+        id: 3
+        name: "LoL: montando o PC ideal"
+        startTime: "2021-10-22 10:00:00"
+        endTime: "2021-10-22 11:00:00"
+        vacancies: 30
+        auditoriumId: 1 
+    - Activitie:
+        id: 4
+        name: "Skyrim X Zelda: BotW"
+        startTime: "2021-10-22 11:00:00"
+        endTime: "2021-10-22 14:00:00"
+        vacancies: 30
+        auditoriumId: 1
+    - Activitie:
+        id: 5
+        name: "Linux X Windows, e por que Linux?"
+        startTime: "2021-10-22 09:00:00"
+        endTime: "2021-10-22 11:00:00"
+        vacancies: 20
+        auditoriumId: 2 
+    - Activitie:
+        id: 6
+        name: "Palestra Braba"
+        startTime: "2021-10-22 09:00:00"
+        endTime: "2021-10-22 10:00:00"
+        vacancies: 30
+        auditoriumId: 3
+    - Activitie:
+        id: 7
+        name: "Palestra Sinistra"
+        startTime: "2021-10-22 10:00:00"
+        endTime: "2021-10-22 11:00:00"
+        vacancies: 10
+        auditoriumId: 3
+    - Activitie:
+        id: 8
+        name: "Minecraft: montando o PC ideal"
+        startTime: "2021-10-23 09:00:00"
+        endTime: "2021-10-23 10:30:00"
+        vacancies: 30
+        auditoriumId: 1
+    - Activitie:
+        id: 9
+        name: "LoL: montando o PC ideal"
+        startTime: "2021-10-23 10:30:00"
+        endTime: "2021-10-23 11:30:00"
+        vacancies: 30
+        auditoriumId: 1 
+    - Activitie:
+        id: 10
+        name: "Linux X Windows, e por que Linux?"
+        startTime: "2021-10-23 09:00:00"
+        endTime: "2021-10-23 11:00:00"
+        vacancies: 20
+        auditoriumId: 2 
+    - Activitie:
+        id: 11
+        name: "Palestra Importante"
+        startTime: "2021-10-23 11:00:00"
+        endTime: "2021-10-23 13:30:00"
+        vacancies: 20
+        auditoriumId: 2
+    - Activitie:
+        id: 12
+        name: "Palestra Braba"
+        startTime: "2021-10-23 09:00:00"
+        endTime: "2021-10-23 10:00:00"
+        vacancies: 30
+        auditoriumId: 3
+    - Activitie:
+        id: 13
+        name: "Palestra Sinistra"
+        startTime: "2021-10-23 10:00:00"
+        endTime: "2021-10-23 11:00:00"
+        vacancies: 10
+        auditoriumId: 3
+    - Activitie:
+        id: 14
+        name: "Minecraft: montando o PC ideal"
+        startTime: "2021-10-24 09:00:00"
+        endTime: "2021-10-24 10:00:00"
+        vacancies: 30
+        auditoriumId: 1
+    - Activitie:
+        id: 15
+        name: "LoL: montando o PC ideal"
+        startTime: "2021-10-24 10:00:00"
+        endTime: "2021-10-24 11:00:00"
+        vacancies: 30
+        auditoriumId: 1 
+    - Activitie:
+        id: 16
+        name: "Linux X Windows, e por que Linux?"
+        startTime: "2021-10-24 09:00:00"
+        endTime: "2021-10-24 11:00:00"
+        vacancies: 0
+        auditoriumId: 3 
+    - Activitie:
+        id: 17
+        name: "Palestra Braba"
+        startTime: "2021-10-24 09:00:00"
+        endTime: "2021-10-24 10:00:00"
+        vacancies: 0
+        auditoriumId: 2
+    - Activitie:
+        id: 18
+        name: "Palestra Sinistra"
+        startTime: "2021-10-24 10:00:00"
+        endTime: "2021-10-24 11:00:00"
+        vacancies: 0
+        auditoriumId: 2
+

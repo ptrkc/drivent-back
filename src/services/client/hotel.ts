@@ -1,4 +1,10 @@
 import Rooms from "@/entities/Rooms";
+import Hotel from "@/entities/Hotel";
+
+export async function getHotels() {
+  const hotels = await Hotel.get();
+  return hotels;
+}
 
 export async function getHotelRooms(hotelId: number, userId: number) {
   const rooms = await Rooms.get(hotelId);
