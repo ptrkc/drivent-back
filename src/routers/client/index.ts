@@ -18,6 +18,6 @@ router.use("/auth", authRouter);
 router.use("/enrollments", tokenValidationMiddleware, enrollmentRouter);
 router.use("/tickets", ticketRouter);
 router.use("/booking", tokenValidationMiddleware, bookingRouter);
-router.use("/hotel", hotelRouter);
+router.use("/hotel", tokenValidationMiddleware, hotelRouter);
 
 export default router;
