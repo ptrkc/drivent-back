@@ -13,4 +13,6 @@ export async function create() {
   });
 
   await activitie.save();
+
+  return activitie;
 }

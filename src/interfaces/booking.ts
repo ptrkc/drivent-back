@@ -1,4 +1,3 @@
-
 interface Booking{
   isOnline: boolean,
   hasHotel: boolean,

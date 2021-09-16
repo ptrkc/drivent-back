@@ -1,4 +1,3 @@
-
 interface RoomVacancy{
   id: number,
   isFilled: boolean
