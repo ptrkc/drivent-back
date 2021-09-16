@@ -4,7 +4,7 @@ import app, { init } from "../../src/app";
 import { clearDatabase, endConnection } from "../utils/database";
 import { createBasicSettings } from "../utils/app";
 import { createSession } from "../factories/sessionFactory";
-import * as Hotel from "../factories/hotelFactory";
+import * as Activitie from "../factories/activitieFactory";
 
 const agent = supertest(app);
 let settings = null;
@@ -23,30 +23,26 @@ afterAll(async () => {
   await endConnection();
 });
 
-describe("GET /hotel/:id/rooms", () => {
+describe("GET /activities", () => {
   beforeEach(async () => {
-    await Hotel.create();
-    await Hotel.createRoomType();
+    await Activitie.create();
   });
 
-  it("should return all hotel`s rooms", async () => {
+  it("should return an array of activities", async () => {
     const session = await createSession();
-    await Hotel.createHotelRoom();
 
-    const response = await agent.get("/hotel/1/rooms").set("Authorization", session.token);
+    const response = await agent.get("/activities").set("Authorization", session.token);
 
     expect(response.body).toEqual([
       expect.objectContaining({
-        number: "00",
-        hotelId: 1,
-        roomTypeId: 1,
-        isAvailable: true,
-        vacancies: [
-          { 
-            id: 1,
-            isFilled: false
-          }
-        ]
+        id: expect.any(Number),
+        name: expect.any(String),
+        startTime: expect.any(String),
+        endTime: expect.any(String),
+        vacancies: expect.any(Number),
+        auditorium: expect.any(String),
+        users: expect.any(Array),
+        date: expect.any(String),
       })]);
   });
 });

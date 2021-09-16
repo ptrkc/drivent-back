@@ -13,7 +13,10 @@ export default class Hotel extends BaseEntity {
   @Column()
   name: string;
 
-  @OneToMany(() => Rooms, (rooms: Rooms) => rooms.hotel, { eager: true })
+  @Column()
+  image: string;
+
+  @OneToMany(() => Rooms, (rooms: Rooms) => rooms.hotel)
   rooms: [Rooms];
 
   @OneToMany(() => RoomTypeHotel, (roomTypeHotel: RoomTypeHotel) => roomTypeHotel.hotel)

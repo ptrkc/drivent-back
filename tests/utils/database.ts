@@ -29,6 +29,8 @@ export async function clearDatabase() {
   await connection.query("TRUNCATE hotel RESTART IDENTITY CASCADE");
   await connection.query("TRUNCATE rooms RESTART IDENTITY CASCADE");
   await connection.query("TRUNCATE \"roomType\" RESTART IDENTITY CASCADE");
+  await connection.query("TRUNCATE auditoriums RESTART IDENTITY CASCADE");
+  await connection.query("TRUNCATE activities RESTART IDENTITY CASCADE");
 }
 
 export async function endConnection() {
