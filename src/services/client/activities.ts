@@ -16,13 +16,16 @@ export async function getActivities() {
 }
 
 export async function enrollUser(enrollmentData: ActivitieEnrollment) {
-  const { userId, activitieId } = enrollmentData;
+  const { userId, activityId } = enrollmentData;
+  console.log(enrollmentData);
 
   const user = await User.findById(userId);
+  console.log(user);
 
   if(!user) return null;
 
-  const activitie = await Activitie.findById(activitieId);
+  const activitie = await Activitie.findById(activityId);
+  console.log(activitie);
 
   if(!activitie) return null;
 

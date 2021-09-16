@@ -1,4 +1,4 @@
 export interface ActivitieEnrollment {
   userId: number;
-  activitieId: number;
+  activityId: number;
 }

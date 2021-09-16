@@ -15,7 +15,7 @@ export async function getActivities(req: Request, res: Response) {
 
 export async function enrollUser(req: Request, res: Response) {
   const enrollmentData = req.body as ActivitieEnrollment;
-  
+
   const enrollmentDone = await service.enrollUser(enrollmentData);
   if(!enrollmentDone) {
     return res.sendStatus(httpStatus.BAD_REQUEST);
