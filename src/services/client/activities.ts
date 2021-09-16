@@ -43,7 +43,7 @@ export async function enrollUser(enrollmentData: ActivitieEnrollment) {
   });
 
   if(timeConflict) {
-    throw new TimeConflictError;
+    throw new TimeConflictError();
   }
 
   activitie.users = [user];

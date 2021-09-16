@@ -46,3 +46,54 @@ describe("GET /activities", () => {
       })]);
   });
 });
+
+describe("POST /activities", () => {
+  it("should returns bad request for non existing user", async () => {
+    const session = await createSession();
+    const activitie = await Activitie.create();
+    const body = { userId: 9999, activitieId: activitie.id };
+
+    const response = await agent.post("/activities").set("Authorization", session.token).send(body);
+
+    expect(response.status).toEqual(400);
+  });
+
+  it("should returns bad request for non existing activitie", async () => {
+    const session = await createSession();
+    const body = { userId: session.userId, activitieId: 9999 };
+
+    const response = await agent.post("/activities").set("Authorization", session.token).send(body);
+
+    expect(response.status).toEqual(400);
+  });
+
+  it("should returns a conflict error if user is already enrolled in the activitie", async () => {
+    const session = await createSession();
+    const activitie = await Activitie.create();
+    const body = { userId: session.userId, activitieId: activitie.id };
+
+    const firstResponse = await agent.post("/activities").set("Authorization", session.token).send(body);
+
+    expect(firstResponse.status).toEqual(201);
+
+    const secondResponse = await agent.post("/activities").set("Authorization", session.token).send(body);
+
+    expect(secondResponse.status).toEqual(409);
+  });
+
+  it("should returns a conflict error if user is already enrolled in an activitie at the same time", async () => {
+    const session = await createSession();
+    const firstActivitie = await Activitie.create();
+    const secondActivitie = await Activitie.create();
+    const firstBody = { userId: session.userId, activitieId: firstActivitie.id };
+    const secondBody = { userId: session.userId, activitieId: secondActivitie.id };
+
+    const firstResponse = await agent.post("/activities").set("Authorization", session.token).send(firstBody);
+
+    expect(firstResponse.status).toEqual(201);
+
+    const secondResponse = await agent.post("/activities").set("Authorization", session.token).send(secondBody);
+
+    expect(secondResponse.status).toEqual(409);
+  });
+});

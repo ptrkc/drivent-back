@@ -18,7 +18,7 @@ export async function enrollUser(req: Request, res: Response) {
   
   const enrollmentDone = await service.enrollUser(enrollmentData);
   if(!enrollmentDone) {
-    return res.sendStatus(httpStatus.NO_CONTENT);
+    return res.sendStatus(httpStatus.BAD_REQUEST);
   }
 
   res.sendStatus(httpStatus.CREATED);
