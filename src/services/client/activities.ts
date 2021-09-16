@@ -17,15 +17,12 @@ export async function getActivities() {
 
 export async function enrollUser(enrollmentData: ActivitieEnrollment) {
   const { userId, activityId } = enrollmentData;
-  console.log(enrollmentData);
 
   const user = await User.findById(userId);
-  console.log(user);
 
   if(!user) return null;
 
   const activitie = await Activitie.findById(activityId);
-  console.log(activitie);
 
   if(!activitie) return null;
 
@@ -52,7 +49,29 @@ export async function enrollUser(enrollmentData: ActivitieEnrollment) {
   activitie.users = [user];
   await Activitie.save(activitie);
 
-  return true;
+  return activitie;
+}
+
+export async function disenrollUser(enrollmentData: ActivitieEnrollment) {
+  const { userId, activityId } = enrollmentData;
+
+  const user = await User.findById(userId);
+
+  if(!user) return null;
+  delete user.activities;
+
+  const activitie = await Activitie.findById(activityId);
+
+  if(!activitie) return null;
+
+  const updatedUsers = activitie.users.filter(u => {
+    u.id !== user.id;
+  });
+
+  activitie.users = updatedUsers;
+  await Activitie.save(activitie);
+
+  return activitie;
 }
 
 function formatActivities(activitieData: Activitie[]) {

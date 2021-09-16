@@ -10,16 +10,27 @@ export async function getActivities(req: Request, res: Response) {
     return res.sendStatus(httpStatus.NO_CONTENT);
   }
   
-  res.send(activities).status(httpStatus.OK);
+  res.status(httpStatus.OK).send(activities);
 }
 
 export async function enrollUser(req: Request, res: Response) {
   const enrollmentData = req.body as ActivitieEnrollment;
 
-  const enrollmentDone = await service.enrollUser(enrollmentData);
-  if(!enrollmentDone) {
+  const activities = await service.enrollUser(enrollmentData);
+  if(!activities) {
     return res.sendStatus(httpStatus.BAD_REQUEST);
   }
 
-  res.sendStatus(httpStatus.CREATED);
+  res.status(httpStatus.CREATED).send(activities);
+}
+
+export async function disenrollUser(req: Request, res: Response) {
+  const enrollmentData = req.body as ActivitieEnrollment;
+
+  const activities = await service.disenrollUser(enrollmentData);
+  if(!activities) {
+    return res.sendStatus(httpStatus.BAD_REQUEST);
+  }
+
+  res.status(httpStatus.OK).send(activities);
 }
