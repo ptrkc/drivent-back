@@ -3,4 +3,5 @@ export interface WSClient extends WebSocket {
   wantsRooms: boolean;
   wantsActivities: boolean;
   hotelId?: number;
+  userId?: number;
 }

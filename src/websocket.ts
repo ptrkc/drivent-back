@@ -1,20 +1,31 @@
 import WebSocket, { Server }  from "ws";
 import http from "http";
+import jwt from "jsonwebtoken";
+
 import { WSClient } from "@/interfaces/wsClient";
 import * as service from "@/services/client/hotel";
+import UnauthorizedError from "@/errors/Unauthorized";
+
+interface JwtPayload {
+    userId: number
+}
 
 export async function connection(
   ws: WebSocket,
   req: http.IncomingMessage
 ) {
   const client = ws as unknown as WSClient;
+  ws.binaryType = "arraybuffer";
   ws.on("pong", heartbeat);
+  ws.on("message", (message) => tokenValidate(client, message));
+  
   const requested = req.url.replace("/updates?q=", "");
   const requestedUpdate = requested.split("/")[0];
 
   client.isAlive = true;
   client.wantsRooms = false;
   client.wantsActivities = false;
+  
   if (requestedUpdate === "rooms") {
     client.hotelId = Number(requested.split("/")[1]);
     client.wantsRooms = true;
@@ -48,7 +59,7 @@ export function sendUpdatedData(wss: Server) {
 
 async function sendDataOnce(ws: WebSocket, client: WSClient) {
   if (client.wantsRooms === true) {
-    const userId = 5;
+    const userId = client.userId;
     const hotelId = client.hotelId;
     const hotelRooms = await service.getHotelRooms(hotelId, userId);
     const stringfiedHotelRooms = JSON.stringify(hotelRooms);
@@ -56,4 +67,13 @@ async function sendDataOnce(ws: WebSocket, client: WSClient) {
   } else if (client.wantsActivities === true) {
     ws.send("New activities on now");
   }
+}
+
+async function tokenValidate(client: WSClient, message: WebSocket.Data) {
+  const token = message.toLocaleString().replace(/['"]+/g, "");
+  if (!token) {
+    throw new UnauthorizedError();
+  } 
+  const { userId } = jwt.verify(token, process.env.JWT_SECRET) as unknown as JwtPayload;
+  client.userId = userId;
 }
