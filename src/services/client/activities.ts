@@ -77,8 +77,13 @@ export async function disenrollUser(enrollmentData: ActivitieEnrollment) {
 function formatActivities(activitieData: Activitie[]) {
   const activities = activitieData.map(activitie => {
     const calculateVacancies = activitie.vacancies - activitie.users.length;
+    activitie.users.forEach(u => {
+      delete u.password;
+      delete u.createdAt;
+      delete u.email;
+    });
 
-    return {
+    const filteredActivities = {
       ...activitie,
       startTime: convertTimestampToTime(activitie.startTime),
       endTime: convertTimestampToTime(activitie.endTime),
@@ -86,6 +91,7 @@ function formatActivities(activitieData: Activitie[]) {
       auditorium: activitie.auditorium.name,
       vacancies: calculateVacancies,
     };
+    return filteredActivities;
   });
 
   return activities;

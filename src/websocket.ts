@@ -3,7 +3,8 @@ import http from "http";
 import jwt from "jsonwebtoken";
 
 import { WSClient } from "@/interfaces/wsClient";
-import * as service from "@/services/client/hotel";
+import * as hotelService from "@/services/client/hotel";
+import * as activitiesService from "@/services/client/activities";
 import UnauthorizedError from "@/errors/Unauthorized";
 
 interface JwtPayload {
@@ -61,11 +62,13 @@ async function sendDataOnce(ws: WebSocket, client: WSClient) {
   if (client.wantsRooms === true) {
     const userId = client.userId;
     const hotelId = client.hotelId;
-    const hotelRooms = await service.getHotelRooms(hotelId, userId);
+    const hotelRooms = await hotelService.getHotelRooms(hotelId, userId);
     const stringfiedHotelRooms = JSON.stringify(hotelRooms);
     ws.send(stringfiedHotelRooms);
   } else if (client.wantsActivities === true) {
-    ws.send("New activities on now");
+    const activities = await activitiesService.getActivities();
+    const stringfiedActivities = JSON.stringify(activities);
+    ws.send(stringfiedActivities);
   }
 }
 
